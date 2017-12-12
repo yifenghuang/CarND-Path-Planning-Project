@@ -110,24 +110,9 @@ else if (ref_vel < 49.5)
 ```
 
  
-trajectory generation module yield a smooth cubic spine. this track interpolation method provided an outperformed result. the spline library header file is quoted, and we feed 5 points into the pipeline: 2 points from the trajectory generated in the last time step; 3 more waypoints at 30/60/90 meters ahead in a given lane. 
+Trajectory generation module need a smooth cubic spine.I use the spline library header file. I feed 2 points in the last time step and 3 waypoints at 30/60/90 meters.
 
 
 ```
 vector<double> next_wp0 = getXY(car_s + 30/60/90, (2 + 4 * cur_lane), map_waypoints_s,map_waypoints_x, map_waypoints_y);
 ```
-
-
-Finally there is a counter introduced. the purpose is to moderate the lane changing response, to discourage an aggressive driving
-behavior. 
-
- 
-```
-num_units_in_current_lane += 1;
-   ...
-if ((laneFlag[i] && oneLaneChange(lane,i) && (num_units_in_current_lane > 10)){
-   ...
-num_units_in_current_lane = 0;
-}
-```
-
